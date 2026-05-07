@@ -1,7 +1,5 @@
 import { redirect } from "next/navigation"
 import Link from "next/link"
-import fs from "fs"
-import path from "path"
 import {
   Package,
   ShoppingCart,
@@ -74,17 +72,6 @@ export default async function AdminDashboardPage() {
   ]
 
   const recentOrders = orders.slice(0, 5)
-
-  // Load any images placed in public/uploads/store (server-side)
-  let storeFiles: string[] = []
-  try {
-    const storeDir = path.join(process.cwd(), "public", "uploads", "store")
-    if (fs.existsSync(storeDir)) {
-      storeFiles = fs.readdirSync(storeDir).map((f) => `/uploads/store/${f}`)
-    }
-  } catch (err) {
-    storeFiles = []
-  }
 
   return (
     <div className="min-h-screen flex bg-muted">
@@ -266,36 +253,6 @@ export default async function AdminDashboardPage() {
                 </Button>
               </div>
             </div>
-          </div>
-
-          {/* Image Gallery */}
-          <div className="bg-card rounded-lg border border-border p-6 mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-semibold text-foreground">Store Images</h3>
-                <p className="text-sm text-muted-foreground">Photos from your storefront and product shots.</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-              {storeFiles.length > 0 ? (
-                storeFiles.map((src) => (
-                  <div key={src} className="rounded overflow-hidden border border-border bg-muted/20">
-                    <img
-                      src={src}
-                      alt={src.split("/").pop()}
-                      className="w-full h-36 object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = "none"
-                      }}
-                    />
-                  </div>
-                ))
-              ) : (
-                <div className="text-sm text-muted-foreground">No images found in /public/uploads/store/</div>
-              )}
-            </div>
-            <p className="text-xs text-muted-foreground mt-3">Place your images in <strong>/public/uploads/store/</strong> with the filenames shown above.</p>
           </div>
 
           {/* Recent Orders */}

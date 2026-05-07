@@ -11,28 +11,14 @@ import { getProducts, seedProducts } from "@/lib/actions/products"
 
 export const dynamic = "force-dynamic"
 
-const categories = [
-  {
-    name: "Shirts",
-    image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600",
-    href: "/products?category=Shirts",
-  },
-  {
-    name: "Trousers",
-    image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600",
-    href: "/products?category=Trousers",
-  },
-  {
-    name: "Blazers",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600",
-    href: "/products?category=Blazers",
-  },
-  {
-    name: "Jackets",
-    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600",
-    href: "/products?category=Jackets",
-  },
-]
+const storeImages = {
+  storefront: "/uploads/store/the-boys-storefront.jpeg",
+  shirts: "/uploads/store/checked-shirts-display.jpeg",
+  interior: "/uploads/store/shop%20image.jpeg",
+  closeup: "/uploads/store/plane%20shirt.jpeg",
+}
+
+// categories removed — homepage will no longer render category tiles
 
 const features = [
   {
@@ -105,7 +91,7 @@ export default async function HomePage() {
                 <div className="absolute inset-0 bg-accent/20 rounded-full blur-3xl" />
                 <div className="relative aspect-square lg:aspect-auto lg:h-full">
                   <Image
-                    src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800"
+                    src={storeImages.storefront}
                     alt="Stylish men's fashion"
                     fill
                     className="object-cover rounded-2xl"
@@ -117,65 +103,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Features Bar */}
-        <section className="bg-secondary border-y border-border">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {features.map((feature) => (
-                <div key={feature.title} className="flex items-center gap-4">
-                  <div className="flex-shrink-0 h-12 w-12 rounded-full bg-accent/10 flex items-center justify-center">
-                    <feature.icon className="h-5 w-5 text-accent" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">{feature.title}</p>
-                    <p className="text-sm text-muted-foreground">{feature.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Categories Section */}
-        <section className="py-16 lg:py-24">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="font-serif text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                Shop by Category
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Explore our curated collection of premium men&apos;s wear, from casual essentials 
-                to formal sophistication.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {categories.map((category) => (
-                <Link
-                  key={category.name}
-                  href={category.href}
-                  className="group relative aspect-[3/4] rounded-lg overflow-hidden"
-                >
-                  <Image
-                    src={category.image || "/placeholder.svg"}
-                    alt={category.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-xl font-semibold text-background mb-2">
-                      {category.name}
-                    </h3>
-                    <span className="text-sm text-background/80 flex items-center gap-1 group-hover:gap-2 transition-all">
-                      Shop Now
-                      <ArrowRight className="h-4 w-4" />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Category section intentionally removed */}
 
         {/* Style Feature Section */}
         <section className="py-16 lg:py-24 bg-muted">
@@ -183,7 +111,7 @@ export default async function HomePage() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="relative aspect-square rounded-2xl overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800"
+                  src={storeImages.closeup}
                   alt="Premium tailoring details"
                   fill
                   className="object-cover"
@@ -227,6 +155,38 @@ export default async function HomePage() {
                   </Link>
                 </Button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Store Gallery */}
+        <section className="py-16 lg:py-24 bg-background">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-3xl lg:text-4xl font-bold text-foreground mb-4">
+                In-Store Highlights
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                A quick look at the storefront and shirt displays now featured across the site.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { src: storeImages.storefront, alt: "The Boys storefront" },
+                { src: storeImages.shirts, alt: "Checked shirts display" },
+                { src: storeImages.interior, alt: "Shop interior" },
+                { src: storeImages.closeup, alt: "Plane shirt close-up" },
+              ].map((image) => (
+                <div key={image.src} className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-border bg-muted">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </section>
