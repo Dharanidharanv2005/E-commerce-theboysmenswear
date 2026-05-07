@@ -1,0 +1,29 @@
+services:
+  mongo:
+    image: mongo:8
+    container_name: theboysmenswear-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: theboysmenswear:latest
+    container_name: theboysmenswear-web
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/theboysmenswear
+      JWT_SECRET: change-this-in-production
+      ADMIN_CODE: ADMIN2024
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+
+volumes:
+  mongo-data:
