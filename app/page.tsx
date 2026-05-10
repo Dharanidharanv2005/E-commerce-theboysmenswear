@@ -12,10 +12,10 @@ import { getProducts, seedProducts } from "@/lib/actions/products"
 export const dynamic = "force-dynamic"
 
 const storeImages = {
-  storefront: "/uploads/store/the-boys-storefront.jpeg",
-  shirts: "/uploads/store/checked-shirts-display.jpeg",
-  interior: "/uploads/store/shop%20image.jpeg",
-  closeup: "/uploads/store/plane%20shirt.jpeg",
+  storefront: "/uploads/store/storefront.jpeg",
+  shirts: "/uploads/store/shirts.jpeg",
+  interior: "/uploads/store/shop-image.jpeg",
+  closeup: "/uploads/store/plane-shirt.jpeg",
 }
 
 // categories removed — homepage will no longer render category tiles
@@ -49,7 +49,7 @@ export default async function HomePage() {
   
   const session = await getSession()
   const cartCount = await getCartCount()
-  const featuredProducts = []
+  const featuredProducts: any[] = []
 
   return (
     <div className="min-h-screen flex flex-col">
