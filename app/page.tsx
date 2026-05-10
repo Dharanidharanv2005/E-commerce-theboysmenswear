@@ -45,7 +45,7 @@ const features = [
 
 export default async function HomePage() {
   // Seed products if database is empty
-  await seedProducts()
+  //await seedProducts()
   
   const [session, cartCount, featuredProducts] = await Promise.all([
     getSession(),
