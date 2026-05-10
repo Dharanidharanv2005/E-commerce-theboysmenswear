@@ -47,11 +47,9 @@ export default async function HomePage() {
   // Seed products if database is empty
   //await seedProducts()
   
-  const [session, cartCount, featuredProducts] = await Promise.all([
-    getSession(),
-    getCartCount(),
-    getProducts({ featured: true, limit: 8 }),
-  ])
+  const session = await getSession()
+  const cartCount = await getCartCount()
+  const featuredProducts = []
 
   return (
     <div className="min-h-screen flex flex-col">
