@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: e-commerce-theboysmenswear
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node .next/standalone/server.js
+    envVars:
+      - key: PORT
+        value: 10000
