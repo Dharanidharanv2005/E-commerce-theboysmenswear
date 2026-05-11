@@ -1,20 +1,17 @@
 import { NextResponse } from "next/server"
-import { cookies } from "next/headers"
 
 export async function POST(request: Request) {
-  const cookieStore = await cookies()
-  cookieStore.delete("session")
-  
-  // Use relative redirect which works on any domain
-  const response = NextResponse.redirect("/login", { status: 302 })
+  const response = NextResponse.redirect(new URL("/login", request.url), {
+    status: 302,
+  })
+  response.cookies.delete("session")
   return response
 }
 
 export async function GET(request: Request) {
-  const cookieStore = await cookies()
-  cookieStore.delete("session")
-  
-  // Use relative redirect which works on any domain
-  const response = NextResponse.redirect("/login", { status: 302 })
+  const response = NextResponse.redirect(new URL("/login", request.url), {
+    status: 302,
+  })
+  response.cookies.delete("session")
   return response
 }
