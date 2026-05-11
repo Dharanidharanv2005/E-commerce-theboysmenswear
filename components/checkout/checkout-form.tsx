@@ -8,6 +8,7 @@ import { Truck, Banknote } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { createOrder } from "@/lib/actions/orders"
 import { useToast } from "@/hooks/use-toast"
 import type { SessionPayload } from "@/lib/auth"
@@ -30,6 +31,8 @@ export function CheckoutForm({ user }: CheckoutFormProps) {
     phone: "",
   })
 
+  const [paymentMethod, setPaymentMethod] = useState("")
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
@@ -43,6 +46,14 @@ export function CheckoutForm({ user }: CheckoutFormProps) {
     if (!formData.address || !formData.city || !formData.state || !formData.pincode || !formData.phone) {
       toast({
         title: "Please fill all fields",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (!paymentMethod) {
+      toast({
+        title: "Please select a payment method",
         variant: "destructive",
       })
       return
@@ -168,12 +179,17 @@ export function CheckoutForm({ user }: CheckoutFormProps) {
           <Banknote className="h-5 w-5 text-accent" />
           Payment Method
         </h2>
-        <div className="rounded-lg border border-border bg-muted/30 p-4">
-          <p className="font-medium text-foreground">Cash on Delivery</p>
-          <p className="text-sm text-muted-foreground mt-1">
-            Pay the full amount when you receive your order. No prepayment required.
-          </p>
-        </div>
+        <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
+          <div className="flex items-center space-x-3 rounded-lg border border-border bg-muted/30 p-4 cursor-pointer hover:bg-muted/50 transition-colors">
+            <RadioGroupItem value="cod" id="cod" />
+            <Label htmlFor="cod" className="flex-1 cursor-pointer">
+              <p className="font-medium text-foreground">Cash on Delivery</p>
+              <p className="text-sm text-muted-foreground">
+                Pay the full amount when you receive your order. No prepayment required.
+              </p>
+            </Label>
+          </div>
+        </RadioGroup>
       </div>
 
       {/* Submit Button */}
